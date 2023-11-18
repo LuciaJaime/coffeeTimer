@@ -6,6 +6,8 @@ const morgan = require('morgan')
 
 // Middleware
 app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 //Config
 app.set('port', config.app.port)

@@ -9,13 +9,29 @@ router.get('/', async function (req, res) {
     response.success(req, res, getAll, 200)
 })
 
+//router.post()
+
 router.get('/:id', async function (req, res) {
     try {
-        const getOne = await controller.getOne()
+        const getOne = await controller.getOne(req.params.id)
         response.success(req, res, getOne, 200)
     } catch (err) {
         response.error(req, res, err, 400)
     }
 })
+
+//router.post()
+
+router.delete('/', remove)
+async function remove(req, res) {
+    try {
+        const item = await controller.remove(req.body)
+        response.success(req, res, 'The employee has been deleted', 200)
+    } catch (err) {
+        response.error(req, res, err, 400)
+    }
+}
+
+
 
 module.exports = router;

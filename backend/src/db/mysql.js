@@ -37,22 +37,26 @@ mySQLConnection();
 function getAll(table) {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT * FROM ${table}`, (error, result) => {
-            if (error) return reject(error);
-            resolve(result)
+            return error ? reject(error) : resolve(result)
         })
     })
 }
 function create(table, item) { }
 function read(table, id) {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT * FROM ${table}WHERE id = ${id}`, (error, result) => {
-            if (error) return reject(error);
-            resolve(result)
+        connection.query(`SELECT * FROM ${table} WHERE id = ${id}`, (error, result) => {
+            return error ? reject(error) : resolve(result)
         })
     })
 }
 function update(table, id) { }
-function remove(table, id) { }
+function remove(table, body) {
+    return new Promise((resolve, reject) => {
+        connection.query(`DELETE FROM ${table} WHERE id = ?`, body.id, (error, result) => {
+            return error ? reject(error) : resolve(result)
+        })
+    })
+}
 
 
 module.exports = {
