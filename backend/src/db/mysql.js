@@ -1,5 +1,6 @@
 const mysql = require('mysql');
-const config = require('../config')
+const config = require('../config');
+const { error } = require('../red/responses');
 
 
 const dbconfig = {
@@ -42,7 +43,14 @@ function getAll(table) {
     })
 }
 function create(table, item) { }
-function read(table, id) { }
+function read(table, id) {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT * FROM ${table}WHERE id = ${id}`, (error, result) => {
+            if (error) return reject(error);
+            resolve(result)
+        })
+    })
+}
 function update(table, id) { }
 function remove(table, id) { }
 

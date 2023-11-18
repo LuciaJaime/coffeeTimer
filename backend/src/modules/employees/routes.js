@@ -4,12 +4,18 @@ const response = require('../../red/responses')
 const controller = require('./controllers')
 
 
-router.get('/', function (req, res) {
-    const getAll = controller.getAll()
-        .then((items) => {
-            response.success(req, res, items, 200)
-        })
+router.get('/', async function (req, res) {
+    const getAll = await controller.getAll()
+    response.success(req, res, getAll, 200)
+})
 
+router.get('/:id', async function (req, res) {
+    try {
+        const getOne = await controller.getOne()
+        response.success(req, res, getOne, 200)
+    } catch (err) {
+        response.error(req, res, err, 400)
+    }
 })
 
 module.exports = router;
